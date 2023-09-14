@@ -15,6 +15,9 @@ class HomeloanContent extends StatelessWidget {
     final TextEditingController tenureController = TextEditingController();
 
 
+    bool isYearSliderVisible = false;
+    bool isMonthSliderVisible = false;
+    double selectedTenure = 0.0;
 
     void updateEmiController() {
       final double homeLoanAmount =
@@ -153,7 +156,7 @@ class HomeloanContent extends StatelessWidget {
                     controller: tenureController, // Bind the controller
                     onChanged: (newValue) {
                       double parsedValue = double.tryParse(newValue) ?? 0.0;
-                      emiController.loanTenure = parsedValue;
+                      selectedTenure = parsedValue;
                       updateEmiController();
                     },
                     decoration: InputDecoration(
@@ -172,7 +175,11 @@ class HomeloanContent extends StatelessWidget {
                             ),
                             child: TextButton(
         onPressed: () {
-        // Add your button's onPressed logic here
+          // Toggle the visibility of the years slider
+          isYearSliderVisible = true;
+          isMonthSliderVisible = false;
+          selectedTenure = emiController.loanTenure / 12; // Convert to years
+          updateEmiController();
         },
         child: Row(
         children: [
@@ -194,8 +201,12 @@ class HomeloanContent extends StatelessWidget {
                             ),
                             child:  TextButton(
                               onPressed: () {
-                                // Add your button's onPressed logic here
-                              },
+                                // Toggle the visibility of the months slider
+                                isMonthSliderVisible = true;
+                                isYearSliderVisible = false;
+                                selectedTenure = emiController.loanTenure; // Convert to months
+                                updateEmiController();
+                                },
                               child: Row(
                                 children: [
 
@@ -219,22 +230,49 @@ class HomeloanContent extends StatelessWidget {
               ],
             ),
             SizedBox(height: 20,),
-            SfSlider(
-              activeColor: Colors.orange,
-              inactiveColor: Colors.grey,
-              min: 0,
-              max: 30,
-              showLabels: true,
-              interval: 15,
-              showTicks: true,
-              value: emiController.loanTenure,
-              onChanged: (newValue) {
-                // Update the EmiController and the input field when the slider changes
-               tenureController.text = newValue.toStringAsFixed(0);
-                emiController.loanTenure = newValue;
-                updateEmiController();
-              },
-              numberFormat: NumberFormat('#.##'),
+            Visibility(
+              visible: isYearSliderVisible,
+                child:   SfSlider(
+                  activeColor: Colors.orange,
+                  inactiveColor: Colors.grey,
+                  min: 0,
+                  max: 30,
+                  showLabels: true,
+                  interval: 15,
+                  showTicks: true,
+                  value: selectedTenure, // Use selectedTenure to set the initial value
+                  onChanged: (newValue) {
+
+                    // Update the selectedTenure
+                    selectedTenure = newValue;
+                    // Update the input field based on the selectedTenure
+                    tenureController.text = newValue.toStringAsFixed(0);
+                    // Convert years back to months for EmiController
+                    emiController.loanTenure = newValue * 12;
+                    updateEmiController();
+                  },
+                  numberFormat: NumberFormat('#.##'),
+                )
+            ),
+            Visibility(
+              visible: isMonthSliderVisible,
+                child:  SfSlider(
+                  activeColor: Colors.orange,
+                  inactiveColor: Colors.grey,
+                  min: 0,
+                  max: 360,
+                  showLabels: true,
+                  interval: 120,
+                  showTicks: true,
+                  value:selectedTenure, // Use selectedTenure to set the initial value
+                  onChanged: (newValue) {
+                    // Update the EmiController and the input field when the slider changes
+                    tenureController.text = (newValue * 2).toStringAsFixed(0);
+                    emiController.loanTenure = newValue * 2;
+                    updateEmiController();
+                  },
+                  numberFormat: NumberFormat('#.##'),
+                ),
             ),
             SizedBox(height: 10),
             Container(
