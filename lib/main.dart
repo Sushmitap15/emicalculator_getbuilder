@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: CupertinoColors.systemGrey2,
             toolbarHeight: 0,
-           shadowColor: CupertinoColors.systemGrey5,
+            shadowColor: CupertinoColors.systemGrey5,
             elevation: 0,
             bottom: TabBar(
               indicatorColor: CupertinoColors.systemGrey5,
@@ -56,7 +56,9 @@ class MyApp extends StatelessWidget {
                 color: CupertinoColors.systemGrey5,
                 child: TabBarView(
                   children: [
-                    HomeloanContent(),
+
+                   HomeloanContent() ,
+
                     Center(
                       child: Text(
                         'Tab 2 Content',
