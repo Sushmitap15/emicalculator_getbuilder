@@ -14,14 +14,14 @@ class EmiController extends GetxController {
 
   void calculateEmi() {
     double principal = loanAmount;
-    double rate = (interestRate /100)/12; // Monthly interest rate
-    double time = loanTenure * 12; // Loan tenure in months
+    double rate = interestRate / 1200; // Monthly interest rate
+    double time = loanTenure; // Loan tenure in months
 
     if (principal > 0 && rate > 0 && time > 0) {
-      emi = (principal * rate * pow(1 + rate, time)) / (pow(1 + rate, time) - 1);
-      totalPayment = emi* time;
+      emi =
+          (principal * rate * pow(1 + rate, time)) / (pow(1 + rate, time) - 1);
+      totalPayment = emi * time;
       totalInterestPayable = totalPayment - principal;
-
     } else {
       emi = 0;
       totalPayment = 0;

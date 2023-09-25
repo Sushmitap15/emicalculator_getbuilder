@@ -19,12 +19,12 @@ class HomeloanContent extends StatelessWidget {
     double selectedTenure = 0.0;
     String selectedTenureUnit = 'Y'; // Default to years
 
-    void updateEmiController() {
-      final double homeLoanAmount =
+    void updateControllerValues() {
+      double homeLoanAmount =
           double.tryParse(loanAmountController.text) ?? 0.0;
-      final double interestRate =
+      double interestRate =
           double.tryParse(interestController.text) ?? 0.0;
-      final double loanTenure =
+      double loanTenure =
           double.tryParse(tenureController.text) ?? 0.0;
 
       // Update the values in EmiController
@@ -56,7 +56,7 @@ class HomeloanContent extends StatelessWidget {
                     onChanged: (newValue) {
                       double parsedValue = double.tryParse(newValue) ?? 0.0;
                       emiController.loanAmount = parsedValue;
-                      updateEmiController();
+                      updateControllerValues();
                     },
                     decoration: InputDecoration(
                       labelText: 'Enter Amount',
@@ -92,7 +92,7 @@ class HomeloanContent extends StatelessWidget {
               onChanged: (newValue) {
                 loanAmountController.text = newValue.toStringAsFixed(0);
                 emiController.loanAmount = newValue;
-                updateEmiController();
+                updateControllerValues();
               },
               numberFormat: NumberFormat('#.##L'),
             ),
@@ -108,7 +108,7 @@ class HomeloanContent extends StatelessWidget {
                     onChanged: (newValue) {
                       double parsedValue = double.tryParse(newValue) ?? 0.0;
                       emiController.interestRate = parsedValue;
-                      updateEmiController();
+                      updateControllerValues();
                     },
                     decoration: InputDecoration(
                       labelText: 'Enter Interest Rate',
@@ -145,7 +145,7 @@ class HomeloanContent extends StatelessWidget {
                 // Update the EmiController and the input field when the slider changes
                 interestController.text = newValue.toStringAsFixed(0);
                 emiController.interestRate = newValue;
-                updateEmiController();
+                updateControllerValues();
               },
               numberFormat: NumberFormat('#.##'),
             ),
@@ -163,7 +163,7 @@ class HomeloanContent extends StatelessWidget {
                           onChanged: (newValue) {
                             double parsedValue = double.tryParse(newValue) ?? 0.0;
                             selectedTenure = parsedValue;
-                            updateEmiController();
+                            updateControllerValues();
                           },
                           decoration: InputDecoration(
                             labelText: 'Enter Loan Tenure',
@@ -193,7 +193,7 @@ class HomeloanContent extends StatelessWidget {
                             selectedTenureUnit = 'Y';
                             selectedTenure = emiController.loanTenure / 12; // Convert to years
                             tenureController.text = selectedTenure.toStringAsFixed(0);
-                            updateEmiController();
+                            updateControllerValues();
                           },
                           child: Row(
                             children: [
@@ -203,7 +203,7 @@ class HomeloanContent extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container( 
+                      Container(
                         width: 50,
                         decoration: BoxDecoration(
                           color: Colors.grey,
@@ -219,7 +219,7 @@ class HomeloanContent extends StatelessWidget {
                             selectedTenureUnit = 'M';
                             selectedTenure = emiController.loanTenure; // Convert to months
                             tenureController.text = selectedTenure.toStringAsFixed(0);
-                            updateEmiController();
+                            updateControllerValues();
                           },
                           child: Row(
                             children: [
@@ -251,7 +251,7 @@ class HomeloanContent extends StatelessWidget {
                   emiController.loanTenure = newValue * 12; // Convert years to months
                   tenureController.text = newValue.toStringAsFixed(0);
 
-                  updateEmiController();
+                  updateControllerValues();
                 },
                 numberFormat: NumberFormat('#.##'),
               ),
@@ -272,7 +272,7 @@ class HomeloanContent extends StatelessWidget {
                   emiController.loanTenure = newValue; // Tenure is already in months
                   tenureController.text = newValue.toStringAsFixed(0);
 
-                  updateEmiController();
+                  updateControllerValues();
                 },
                 numberFormat: NumberFormat('#.##'),
               ),
