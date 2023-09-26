@@ -1,4 +1,5 @@
 import 'package:emicalculator_getbuilder/home_personal_logic.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -40,10 +41,16 @@ class HomeloanContent extends StatelessWidget {
       // Calculate EMI using EmiController
       emiController.calculateEmi();
     }
-
-    return GetBuilder<EmiController>(
+    return SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+    child:SingleChildScrollView(
+    child: GetBuilder<EmiController>(
       builder: (emiController) {
-        return Column(
+      return ConstrainedBox(
+        constraints: BoxConstraints(
+          minWidth: MediaQuery.of(context).size.width,
+        ),
+        child: Column(
           children: [
             SizedBox(height: 20,),
             Row(
@@ -279,14 +286,18 @@ class HomeloanContent extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Container(
+
               decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.black, width: 0.5))),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     decoration: BoxDecoration(border: Border(right: BorderSide(color: Colors.black, width: 0.5,))),
+                    width: 200,
                     padding: EdgeInsets.all(40),
-                    alignment: Alignment.center,
+                    //alignment: Alignment.center,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
                           child: Column(
@@ -317,20 +328,83 @@ class HomeloanContent extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Column(
                             children: [
-                              Text('Total Payment (Principal+Interest)'),
+                              Text('Total Payment(Principal+Interest)'),
                               Text('${emiController.totalPayment.toStringAsFixed(0)}'),
                             ],
                           ),
                         )
                       ],
                     ),
+                  ),
+                  Container(
+                   width: MediaQuery.of(context).size.width / 2.1,
+                    height: 200,
+
+                    child:  PieChart(
+
+                        PieChartData(
+
+                          sections: [
+
+                            PieChartSectionData(
+
+                                value: emiController.interestPercentage.isNaN ? 0 : emiController.interestPercentage,
+                                color: Colors.orange,
+                                title: '${emiController.interestPercentage.isNaN ? 0 :emiController.interestPercentage.toStringAsFixed(1)}%',
+                                titleStyle: TextStyle(fontSize: 16, color:Colors.black),
+                                borderSide: BorderSide(color: Color.fromARGB(255, 243, 215, 184),width: 5)
+                            ),
+                            PieChartSectionData(
+                                value: emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage,
+                                color: Colors.green,
+                                title: '${emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage.toStringAsFixed(1)}%',
+                                titleStyle: TextStyle(fontSize: 16, color:Colors.black),
+                                borderSide: BorderSide(color:Color.fromARGB(255, 192, 240, 194),width: 5)
+                            ),
+                          ],
+                          sectionsSpace: 5, // No gap between sections
+                          centerSpaceRadius: 0, // No center space
+                        ),
+                      ),
                   )
                 ],
               ),
             ),
+            Container(
+              width: 900,
+              child: DataTable(
+                columnSpacing: 15,
+                columns: [
+                  DataColumn(label: Text('Year')),
+                  DataColumn(label: Text('Month')),
+                //  DataColumn(label: Text('Principal')),
+                //  DataColumn(label: Text('EMI')),
+                  DataColumn(label: Text('Total Payment')),
+                  DataColumn(label: Text('Balance')),
+                  DataColumn(label: Text('Loan Paid')),
+                ],
+                rows: emiController.emiSchedule
+                    .map((item) => DataRow(
+                  cells: [
+                    DataCell(Text(item.year.toString())),
+                    DataCell(Text(item.month.toString())),
+                 //   DataCell(Text(item.principal.toStringAsFixed(2))),
+                 //   DataCell(Text(item.loan.toStringAsFixed(2))),
+                    DataCell(Text(item.totalPayment.toStringAsFixed(2))),
+                    DataCell(Text(item.balance.toStringAsFixed(2))),
+                    DataCell(Text(item.loanPaidToDate.toStringAsFixed(2))),
+                  ],
+                ))
+                    .toList(),
+              ),
+            ),
+
           ],
-        );
+        ),
+      );
       },
+    )
+    )
     );
   }
 }

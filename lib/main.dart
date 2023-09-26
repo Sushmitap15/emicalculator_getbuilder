@@ -15,7 +15,7 @@ class TabController extends GetxController {
 
   void selectTab(int index) {
     selectedIndex = index;
-    update();
+   // update();
   }
 }
 
