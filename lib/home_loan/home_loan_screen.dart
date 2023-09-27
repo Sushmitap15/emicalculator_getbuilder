@@ -433,33 +433,96 @@ class HomeloanContent extends StatelessWidget {
             ),
             Container(
               width: 900,
-              child: DataTable(
-                border: TableBorder.all(),
-                columnSpacing: 15,
-                columns: [
-                  DataColumn(label: Text('Year')),
-                  DataColumn(label: Text('Month')),
-                //  DataColumn(label: Text('Principal')),
-                //  DataColumn(label: Text('EMI')),
-                  DataColumn(label: Text('TotalPayment')),
-                  DataColumn(label: Text('Balance')),
-                  DataColumn(label: Text('Loan Paid')),
-                ],
-                rows: emiController.emiSchedule
-                    .map((item) => DataRow(
-                  cells: [
-                    DataCell(Text(item.year.toString())),
-                    DataCell(Text(item.month.toString())),
-                 //   DataCell(Text(item.principal.toStringAsFixed(2))),
-                 //   DataCell(Text(item.loan.toStringAsFixed(2))),
-                    DataCell(Text(item.totalPayment.toStringAsFixed(2))),
-                    DataCell(Text(item.balance.toStringAsFixed(2))),
-                    DataCell(Text(item.loanPaidToDate.toStringAsFixed(2))),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal, // Enable horizontal scrolling
+                child: DataTable(
+                  border:TableBorder.all(),
+                  columns: [
+                    DataColumn(
+                      label: SizedBox(
+                        width: 30, // Set the width for the column header
+                        child: Text('Year'),
+                      ),
+                    ),
+                    DataColumn(
+                      label: SizedBox(
+                        width: 40, // Set the width for the column header
+                        child: Text('Month'),
+                      ),
+                    ),
+                    DataColumn(
+                      label: SizedBox(
+                        width: 60, // Set the width for the column header
+                        child: Text('Principal'),
+                      ),
+                    ),
+                    DataColumn(
+                      label: SizedBox(
+                        width: 30, // Set the width for the column header
+                        child: Text('EMI'),
+                      ),
+                    ),
+                    DataColumn(
+                      label: SizedBox(
+                        width: 100, // Set the width for the column header
+                        child: Text('Total Payment'),
+                      ),
+                    ),
+                    DataColumn(
+                      label: SizedBox(
+                        width: 50, // Set the width for the column header
+                        child: Text('Balance'),
+                      ),
+                    ),
                   ],
-                ))
-                    .toList(),
+                  rows: emiController.emiSchedule
+                      .map(
+                        (item) => DataRow(
+                      cells: [
+                        DataCell(
+                          SizedBox(
+                            width: 50, // Set the width for the data cell
+                            child: Text(item.year.toString()),
+                          ),
+                        ),
+                        DataCell(
+                          SizedBox(
+                            width: 40, // Set the width for the data cell
+                            child: Text(item.month.toString()),
+                          ),
+                        ),
+                        DataCell(
+                          SizedBox(
+                            width: 60, // Set the width for the data cell
+                            child: Text(item.principal.toStringAsFixed(1)),
+                          ),
+                        ),
+                        DataCell(
+                          SizedBox(
+                            width: 60, // Set the width for the data cell
+                            child: Text(item.loan.toStringAsFixed(1)),
+                          ),
+                        ),
+                        DataCell(
+                          SizedBox(
+                            width: 100, // Set the width for the data cell
+                            child: Text(item.totalPayment.toStringAsFixed(1)),
+                          ),
+                        ),
+                        DataCell(
+                          SizedBox(
+                            width: 70, // Set the width for the data cell
+                            child: Text(item.balance.toStringAsFixed(1)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                      .toList(),
+                ),
               ),
             ),
+
 
           ],
         ),
