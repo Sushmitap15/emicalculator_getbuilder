@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:emicalculator_getbuilder/home_personal_logic.dart';
+import 'package:emicalculator_getbuilder/personal_loan/personal_loan_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -58,13 +59,8 @@ class MyApp extends StatelessWidget {
                   children: [
 
                    HomeloanContent() ,
+                   PersonalloanContent(),
 
-                    Center(
-                      child: Text(
-                        'Tab 2 Content',
-                        style: TextStyle(fontSize: 24),
-                      ),
-                    ),
                   ],
                 ),
               );
