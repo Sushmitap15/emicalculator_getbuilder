@@ -336,50 +336,112 @@ class HomeloanContent extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                   width: MediaQuery.of(context).size.width / 2.1,
-                    height: 200,
+                  // Container(
+                  //  width: MediaQuery.of(context).size.width / 2.1,
+                  //   height: 200,
+                  //
+                  //   child:  PieChart(
+                  //
+                  //       PieChartData(
+                  //
+                  //         sections: [
+                  //
+                  //           PieChartSectionData(
+                  //
+                  //               value: emiController.interestPercentage.isNaN ? 0 : emiController.interestPercentage,
+                  //               color: Colors.orange,
+                  //               title: '${emiController.interestPercentage.isNaN ? 0 :emiController.interestPercentage.toStringAsFixed(1)}%',
+                  //               titleStyle: TextStyle(fontSize: 16, color:Colors.black),
+                  //               borderSide: BorderSide(color: Color.fromARGB(255, 243, 215, 184),width: 5)
+                  //           ),
+                  //           PieChartSectionData(
+                  //               value: emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage,
+                  //               color: Colors.green,
+                  //               title: '${emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage.toStringAsFixed(1)}%',
+                  //               titleStyle: TextStyle(fontSize: 16, color:Colors.black),
+                  //               borderSide: BorderSide(color:Color.fromARGB(255, 192, 240, 194),width: 5)
+                  //           ),
+                  //         ],
+                  //         sectionsSpace: 5, // No gap between sections
+                  //         centerSpaceRadius: 0, // No center space
+                  //       ),
+                  //     ),
+                  // )
+                  Column(
+                    children: [
+                      Text(
+                        'Break-Up of total Payment',
 
-                    child:  PieChart(
+                        style: TextStyle(
+                          fontSize: 14,
 
-                        PieChartData(
-
-                          sections: [
-
-                            PieChartSectionData(
-
-                                value: emiController.interestPercentage.isNaN ? 0 : emiController.interestPercentage,
-                                color: Colors.orange,
-                                title: '${emiController.interestPercentage.isNaN ? 0 :emiController.interestPercentage.toStringAsFixed(1)}%',
-                                titleStyle: TextStyle(fontSize: 16, color:Colors.black),
-                                borderSide: BorderSide(color: Color.fromARGB(255, 243, 215, 184),width: 5)
-                            ),
-                            PieChartSectionData(
-                                value: emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage,
-                                color: Colors.green,
-                                title: '${emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage.toStringAsFixed(1)}%',
-                                titleStyle: TextStyle(fontSize: 16, color:Colors.black),
-                                borderSide: BorderSide(color:Color.fromARGB(255, 192, 240, 194),width: 5)
-                            ),
-                          ],
-                          sectionsSpace: 5, // No gap between sections
-                          centerSpaceRadius: 0, // No center space
                         ),
                       ),
+
+                      Container(
+                        width:  MediaQuery.of(context).size.width / 2.1,
+                        height: 200,
+                        child: PieChart(
+                          PieChartData(
+                            // Your PieChart data configuration here
+                              sections: [
+
+                                PieChartSectionData(
+
+                                         value: emiController.interestPercentage.isNaN ? 0 : emiController.interestPercentage,
+                                        color: Colors.orange,
+                                           title: '${emiController.interestPercentage.isNaN ? 0 :emiController.interestPercentage.toStringAsFixed(1)}%',
+                                           titleStyle: TextStyle(fontSize: 16, color:Colors.black),
+                                           borderSide: BorderSide(color: Color.fromARGB(255, 243, 215, 184),width: 5)
+                                       ),
+                                       PieChartSectionData(
+                                           value: emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage,
+                                           color: Colors.green,
+                                           title: '${emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage.toStringAsFixed(1)}%',
+                                           titleStyle: TextStyle(fontSize: 16, color:Colors.black),
+                                           borderSide: BorderSide(color:Color.fromARGB(255, 192, 240, 194),width: 5)
+                                       ),
+                                     ],
+                                     sectionsSpace: 5, // No gap between sections
+                                    centerSpaceRadius: 0, // No center space
+
+                          ),
+                        ),
+                        
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+
+
+                              Text('Principal Loan Amount:${emiController.interestPercentage.toStringAsFixed(1)}', style: TextStyle(fontSize: 14,color: Colors.orange)),
+
+
+
+
+                              Text('Total Interest:${emiController.paymentPercentage.toStringAsFixed(1)}', style: TextStyle(fontSize: 14,color: Colors.green)),
+
+
+                          
+                        ],
+                      ),
+                    ],
                   )
+
                 ],
               ),
             ),
             Container(
               width: 900,
               child: DataTable(
+                border: TableBorder.all(),
                 columnSpacing: 15,
                 columns: [
                   DataColumn(label: Text('Year')),
                   DataColumn(label: Text('Month')),
                 //  DataColumn(label: Text('Principal')),
                 //  DataColumn(label: Text('EMI')),
-                  DataColumn(label: Text('Total Payment')),
+                  DataColumn(label: Text('TotalPayment')),
                   DataColumn(label: Text('Balance')),
                   DataColumn(label: Text('Loan Paid')),
                 ],
