@@ -43,493 +43,505 @@ class HomeloanContent extends StatelessWidget {
     }
     return SingleChildScrollView(
         scrollDirection: Axis.vertical,
-    child:SingleChildScrollView(
-    child: GetBuilder<EmiController>(
-      builder: (emiController) {
-      return ConstrainedBox(
-        constraints: BoxConstraints(
-          minWidth: MediaQuery.of(context).size.width,
-        ),
-        child: Column(
-          children: [
-            SizedBox(height: 20,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text('HomeLoan Amount'),
-                Expanded(
-                  child: TextField(
-                    controller: loanAmountController,
-                    onChanged: (newValue) {
-                      double parsedValue = double.tryParse(newValue) ?? 0.0;
-                      emiController.loanAmount = parsedValue;
-                      updateControllerValues();
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Enter Amount',
-                      suffixIcon: Container(
-                        height: 58,
-                        decoration: BoxDecoration(
-                          color: Colors.grey,
-                          border: Border(left: BorderSide(color: Colors.black, width: 0.5)),
-                        ),
-                        child: Icon(Icons.currency_rupee, color: Colors.black),
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                          width: 0.5,
-                        ),
-                      ),
-                    ),
+        child:SingleChildScrollView(
+            child: GetBuilder<EmiController>(
+              builder: (emiController) {
+                return ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: MediaQuery.of(context).size.width,
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            SfSlider(
-              activeColor: Colors.orange,
-              inactiveColor: Colors.grey,
-              min: 0,
-              max: 20000000,
-              showLabels: true,
-              interval: 10000000,
-              showTicks: true,
-              value: emiController.loanAmount,
-              onChanged: (newValue) {
-                loanAmountController.text = newValue.toStringAsFixed(0);
-                emiController.loanAmount = newValue;
-                updateControllerValues();
-              },
-              numberFormat: NumberFormat('#.##L'),
-            ),
-            SizedBox(height: 10),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text('Interest Rate'),
-                Expanded(
-                  child: TextField(
-                    controller: interestController, // Bind the controller
-                    onChanged: (newValue) {
-                      double parsedValue = double.tryParse(newValue) ?? 0.0;
-                      emiController.interestRate = parsedValue;
-                      updateControllerValues();
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Enter Interest Rate',
-                      suffixIcon: Container(
-                        height: 58,
-                        decoration: BoxDecoration(
-                          color: Colors.grey,
-                          border: Border(left: BorderSide(color: Colors.black, width: 0.5)),
-                        ),
-                        child: Icon(Icons.percent, color: Colors.black),
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                          width: 0.5,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            SfSlider(
-              activeColor: Colors.orange,
-              inactiveColor: Colors.grey,
-              min: 0,
-              max: 20,
-              showLabels: true,
-              interval: 2.5,
-              showTicks: true,
-              value: emiController.interestRate,
-              onChanged: (newValue) {
-                // Update the EmiController and the input field when the slider changes
-                interestController.text = newValue.toStringAsFixed(0);
-                emiController.interestRate = newValue;
-                updateControllerValues();
-              },
-              numberFormat: NumberFormat('#.##'),
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text('Loan Tenure'),
-                Expanded(
-                  child: Row(
+                  child: Column(
                     children: [
-                      Expanded(
-                        child: TextField(
-                          controller: tenureController,
-                          onChanged: (newValue) {
-                            double parsedValue = double.tryParse(newValue) ?? 0.0;
-                            selectedTenure = parsedValue;
-                            updateControllerValues();
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'Enter Loan Tenure',
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black,
-                                width: 0.5,
+                      SizedBox(height: 20,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text('HomeLoan Amount'),
+                          Expanded(
+                            child: TextField(
+                              controller: loanAmountController,
+                              onChanged: (newValue) {
+                                double parsedValue = double.tryParse(newValue) ?? 0.0;
+                                emiController.loanAmount = parsedValue;
+                                updateControllerValues();
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'Enter Amount',
+                                suffixIcon: Container(
+                                  height: 58,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    border: Border(left: BorderSide(color: Colors.black, width: 0.5)),
+                                  ),
+                                  child: Icon(Icons.currency_rupee, color: Colors.black),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 0.5,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      SizedBox(width: 10), // Add spacing between years and months inputs
-                      Container(
-                        width: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.grey,
-                          border: Border(
-                            left: BorderSide(color: Colors.black, width: 0.5),
-                          ),
-                        ),
-                        child: TextButton(
-                          onPressed: () {
-                            // Toggle the visibility of the years slider
-                            isYearSliderVisible = true;
-                            isMonthSliderVisible = false;
-                            selectedTenureUnit = 'Y';
-                            selectedTenure = emiController.loanTenure / 12; // Convert to years
-                            tenureController.text = selectedTenure.toStringAsFixed(0);
-                            updateControllerValues();
-                          },
-                          child: Row(
-                            children: [
-                              SizedBox(width: 10),
-                              Text('Y', style: TextStyle(color: Colors.black)),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.grey,
-                          border: Border(
-                            left: BorderSide(color: Colors.black, width: 0.5),
-                          ),
-                        ),
-                        child: TextButton(
-                          onPressed: () {
-                            // Toggle the visibility of the months slider
-                            isMonthSliderVisible = true;
-                            isYearSliderVisible = false;
-                            selectedTenureUnit = 'M';
-                            selectedTenure = emiController.loanTenure; // Convert to months
-                            tenureController.text = selectedTenure.toStringAsFixed(0);
-                            updateControllerValues();
-                          },
-                          child: Row(
-                            children: [
-                              SizedBox(width: 10),
-                              Text('M', style: TextStyle(color: Colors.black)),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20,),
-            Visibility(
-              visible: isYearSliderVisible,
-              child: SfSlider(
-                activeColor: Colors.orange,
-                inactiveColor: Colors.grey,
-                min: 0,
-                max: 30,
-                showLabels: true,
-                interval: 15,
-                showTicks: true,
-                value: selectedTenure, // In years
-                onChanged: (newValue) {
-                  selectedTenure = newValue;
-                  emiController.loanTenure = newValue * 12; // Convert years to months
-                  tenureController.text = newValue.toStringAsFixed(0);
-
-                  updateControllerValues();
-                },
-                numberFormat: NumberFormat('#.##'),
-              ),
-            ),
-            Visibility(
-              visible: isMonthSliderVisible,
-              child: SfSlider(
-                activeColor: Colors.orange,
-                inactiveColor: Colors.grey,
-                min: 0,
-                max: 360,
-                showLabels: true,
-                interval: 120,
-                showTicks: true,
-                value: selectedTenure, // In months
-                onChanged: (newValue) {
-                  selectedTenure = newValue;
-                  emiController.loanTenure = newValue; // Tenure is already in months
-                  tenureController.text = newValue.toStringAsFixed(0);
-
-                  updateControllerValues();
-                },
-                numberFormat: NumberFormat('#.##'),
-              ),
-            ),
-            SizedBox(height: 10),
-            Container(
-
-              decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.black, width: 0.5))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(border: Border(right: BorderSide(color: Colors.black, width: 0.5,))),
-                    width: 200,
-                    padding: EdgeInsets.all(40),
-                    //alignment: Alignment.center,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Column(
-                            children: [
-                              Text('Loan EMI'),
-                              Text('${emiController.emi.toStringAsFixed(0)}'),
-                            ],
-                          ),
-                        ),
-                        Divider(
-                          color: Colors.black,
-                          thickness: 0.5,
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          child: Column(
-                            children: [
-                              Text('Total Interest Payable'),
-                              Text('${emiController.totalInterestPayable.toStringAsFixed(0)}'),
-                            ],
-                          ),
-                        ),
-                        Divider(
-                          color: Colors.black,
-                          thickness: 0.5,
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          child: Column(
-                            children: [
-                              Text('Total Payment(Principal+Interest)'),
-                              Text('${emiController.totalPayment.toStringAsFixed(0)}'),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  // Container(
-                  //  width: MediaQuery.of(context).size.width / 2.1,
-                  //   height: 200,
-                  //
-                  //   child:  PieChart(
-                  //
-                  //       PieChartData(
-                  //
-                  //         sections: [
-                  //
-                  //           PieChartSectionData(
-                  //
-                  //               value: emiController.interestPercentage.isNaN ? 0 : emiController.interestPercentage,
-                  //               color: Colors.orange,
-                  //               title: '${emiController.interestPercentage.isNaN ? 0 :emiController.interestPercentage.toStringAsFixed(1)}%',
-                  //               titleStyle: TextStyle(fontSize: 16, color:Colors.black),
-                  //               borderSide: BorderSide(color: Color.fromARGB(255, 243, 215, 184),width: 5)
-                  //           ),
-                  //           PieChartSectionData(
-                  //               value: emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage,
-                  //               color: Colors.green,
-                  //               title: '${emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage.toStringAsFixed(1)}%',
-                  //               titleStyle: TextStyle(fontSize: 16, color:Colors.black),
-                  //               borderSide: BorderSide(color:Color.fromARGB(255, 192, 240, 194),width: 5)
-                  //           ),
-                  //         ],
-                  //         sectionsSpace: 5, // No gap between sections
-                  //         centerSpaceRadius: 0, // No center space
-                  //       ),
-                  //     ),
-                  // )
-                  Column(
-                    children: [
-                      Text(
-                        'Break-Up of total Payment',
-
-                        style: TextStyle(
-                          fontSize: 14,
-
-                        ),
-                      ),
-
-                      Container(
-                        width:  MediaQuery.of(context).size.width / 2.1,
-                        height: 200,
-                        child: PieChart(
-                          PieChartData(
-                            // Your PieChart data configuration here
-                              sections: [
-
-                                PieChartSectionData(
-
-                                         value: emiController.interestPercentage.isNaN ? 0 : emiController.interestPercentage,
-                                        color: Colors.orange,
-                                           title: '${emiController.interestPercentage.isNaN ? 0 :emiController.interestPercentage.toStringAsFixed(1)}%',
-                                           titleStyle: TextStyle(fontSize: 16, color:Colors.black),
-                                           borderSide: BorderSide(color: Color.fromARGB(255, 243, 215, 184),width: 5)
-                                       ),
-                                       PieChartSectionData(
-                                           value: emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage,
-                                           color: Colors.green,
-                                           title: '${emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage.toStringAsFixed(1)}%',
-                                           titleStyle: TextStyle(fontSize: 16, color:Colors.black),
-                                           borderSide: BorderSide(color:Color.fromARGB(255, 192, 240, 194),width: 5)
-                                       ),
-                                     ],
-                                     sectionsSpace: 5, // No gap between sections
-                                    centerSpaceRadius: 0, // No center space
-
-                          ),
-                        ),
-                        
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-
-
-                              Text('Principal Loan Amount:${emiController.interestPercentage.toStringAsFixed(1)}', style: TextStyle(fontSize: 14,color: Colors.orange)),
-
-
-
-
-                              Text('Total Interest:${emiController.paymentPercentage.toStringAsFixed(1)}', style: TextStyle(fontSize: 14,color: Colors.green)),
-
-
-                          
                         ],
                       ),
+                      SizedBox(height: 10),
+                      SfSlider(
+                        activeColor: Colors.orange,
+                        inactiveColor: Colors.grey,
+                        min: 0,
+                        max: 20000000,
+                        showLabels: true,
+                        interval: 10000000,
+                        showTicks: true,
+                        value: emiController.loanAmount,
+                        onChanged: (newValue) {
+                          loanAmountController.text = newValue.toStringAsFixed(0);
+                          emiController.loanAmount = newValue;
+                          updateControllerValues();
+                        },
+                        numberFormat: NumberFormat('#.##L'),
+                      ),
+                      SizedBox(height: 10),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text('Interest Rate'),
+                          Expanded(
+                            child: TextField(
+                              controller: interestController, // Bind the controller
+                              onChanged: (newValue) {
+                                double parsedValue = double.tryParse(newValue) ?? 0.0;
+                                emiController.interestRate = parsedValue;
+                                updateControllerValues();
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'Enter Interest Rate',
+                                suffixIcon: Container(
+                                  height: 58,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    border: Border(left: BorderSide(color: Colors.black, width: 0.5)),
+                                  ),
+                                  child: Icon(Icons.percent, color: Colors.black),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 0.5,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      SfSlider(
+                        activeColor: Colors.orange,
+                        inactiveColor: Colors.grey,
+                        min: 0,
+                        max: 20,
+                        showLabels: true,
+                        interval: 2.5,
+                        showTicks: true,
+                        value: emiController.interestRate,
+                        onChanged: (newValue) {
+                          // Update the EmiController and the input field when the slider changes
+                          interestController.text = newValue.toStringAsFixed(0);
+                          emiController.interestRate = newValue;
+                          updateControllerValues();
+                        },
+                        numberFormat: NumberFormat('#.##'),
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text('Loan Tenure'),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: tenureController,
+                                    onChanged: (newValue) {
+                                      double parsedValue = double.tryParse(newValue) ?? 0.0;
+                                      selectedTenure = parsedValue;
+                                      updateControllerValues();
+                                    },
+                                    decoration: InputDecoration(
+                                      labelText: 'Enter Loan Tenure',
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.black,
+                                          width: 0.5,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 10), // Add spacing between years and months inputs
+                                Container(
+                                  width: 50,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    border: Border(
+                                      left: BorderSide(color: Colors.black, width: 0.5),
+                                    ),
+                                  ),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      // Toggle the visibility of the years slider
+                                      isYearSliderVisible = true;
+                                      isMonthSliderVisible = false;
+                                      selectedTenureUnit = 'Y';
+                                      selectedTenure = emiController.loanTenure / 12; // Convert to years
+                                      tenureController.text = selectedTenure.toStringAsFixed(0);
+                                      updateControllerValues();
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SizedBox(width: 10),
+                                        Text('Y', style: TextStyle(color: Colors.black)),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 50,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    border: Border(
+                                      left: BorderSide(color: Colors.black, width: 0.5),
+                                    ),
+                                  ),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      // Toggle the visibility of the months slider
+                                      isMonthSliderVisible = true;
+                                      isYearSliderVisible = false;
+                                      selectedTenureUnit = 'M';
+                                      selectedTenure = emiController.loanTenure; // Convert to months
+                                      tenureController.text = selectedTenure.toStringAsFixed(0);
+                                      updateControllerValues();
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SizedBox(width: 10),
+                                        Text('M', style: TextStyle(color: Colors.black)),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20,),
+                      Visibility(
+                        visible: isYearSliderVisible,
+                        child: SfSlider(
+                          activeColor: Colors.orange,
+                          inactiveColor: Colors.grey,
+                          min: 0,
+                          max: 30,
+                          showLabels: true,
+                          interval: 15,
+                          showTicks: true,
+                          value: selectedTenure, // In years
+                          onChanged: (newValue) {
+                            selectedTenure = newValue;
+                            emiController.loanTenure = newValue * 12; // Convert years to months
+                            tenureController.text = newValue.toStringAsFixed(0);
+
+                            updateControllerValues();
+                          },
+                          numberFormat: NumberFormat('#.##'),
+                        ),
+                      ),
+                      Visibility(
+                        visible: isMonthSliderVisible,
+                        child: SfSlider(
+                          activeColor: Colors.orange,
+                          inactiveColor: Colors.grey,
+                          min: 0,
+                          max: 360,
+                          showLabels: true,
+                          interval: 120,
+                          showTicks: true,
+                          value: selectedTenure, // In months
+                          onChanged: (newValue) {
+                            selectedTenure = newValue;
+                            emiController.loanTenure = newValue; // Tenure is already in months
+                            tenureController.text = newValue.toStringAsFixed(0);
+
+                            updateControllerValues();
+                          },
+                          numberFormat: NumberFormat('#.##'),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+
+                        decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.black, width: 0.5))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(border: Border(right: BorderSide(color: Colors.black, width: 0.5,))),
+                              width: 200,
+                              padding: EdgeInsets.all(40),
+                              //alignment: Alignment.center,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    child: Column(
+                                      children: [
+                                        Text('Loan EMI'),
+                                        Text('${emiController.emi.toStringAsFixed(0)}'),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    color: Colors.black,
+                                    thickness: 0.5,
+                                  ),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      children: [
+                                        Text('Total Interest Payable'),
+                                        Text('${emiController.totalInterestPayable.toStringAsFixed(0)}'),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    color: Colors.black,
+                                    thickness: 0.5,
+                                  ),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      children: [
+                                        Text('Total Payment(Principal+Interest)'),
+                                        Text('${emiController.totalPayment.toStringAsFixed(0)}'),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            // Container(
+                            //  width: MediaQuery.of(context).size.width / 2.1,
+                            //   height: 200,
+                            //
+                            //   child:  PieChart(
+                            //
+                            //       PieChartData(
+                            //
+                            //         sections: [
+                            //
+                            //           PieChartSectionData(
+                            //
+                            //               value: emiController.interestPercentage.isNaN ? 0 : emiController.interestPercentage,
+                            //               color: Colors.orange,
+                            //               title: '${emiController.interestPercentage.isNaN ? 0 :emiController.interestPercentage.toStringAsFixed(1)}%',
+                            //               titleStyle: TextStyle(fontSize: 16, color:Colors.black),
+                            //               borderSide: BorderSide(color: Color.fromARGB(255, 243, 215, 184),width: 5)
+                            //           ),
+                            //           PieChartSectionData(
+                            //               value: emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage,
+                            //               color: Colors.green,
+                            //               title: '${emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage.toStringAsFixed(1)}%',
+                            //               titleStyle: TextStyle(fontSize: 16, color:Colors.black),
+                            //               borderSide: BorderSide(color:Color.fromARGB(255, 192, 240, 194),width: 5)
+                            //           ),
+                            //         ],
+                            //         sectionsSpace: 5, // No gap between sections
+                            //         centerSpaceRadius: 0, // No center space
+                            //       ),
+                            //     ),
+                            // )
+                            Column(
+                              children: [
+                                Text(
+                                  'Break-Up of total Payment',
+
+                                  style: TextStyle(
+                                    fontSize: 14,
+
+                                  ),
+                                ),
+
+                                Container(
+                                  width:  MediaQuery.of(context).size.width / 2.1,
+                                  height: 200,
+                                  child: PieChart(
+                                    PieChartData(
+                                      // Your PieChart data configuration here
+                                      sections: [
+
+                                        PieChartSectionData(
+
+                                            value: emiController.interestPercentage.isNaN ? 0 : emiController.interestPercentage,
+                                            color: Colors.orange,
+                                            title: '${emiController.interestPercentage.isNaN ? 0 :emiController.interestPercentage.toStringAsFixed(1)}%',
+                                            titleStyle: TextStyle(fontSize: 16, color:Colors.black),
+                                            borderSide: BorderSide(color: Color.fromARGB(255, 243, 215, 184),width: 5)
+                                        ),
+                                        PieChartSectionData(
+                                            value: emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage,
+                                            color: Colors.green,
+                                            title: '${emiController.paymentPercentage.isNaN ? 0 : emiController.paymentPercentage.toStringAsFixed(1)}%',
+                                            titleStyle: TextStyle(fontSize: 16, color:Colors.black),
+                                            borderSide: BorderSide(color:Color.fromARGB(255, 192, 240, 194),width: 5)
+                                        ),
+                                      ],
+                                      sectionsSpace: 5, // No gap between sections
+                                      centerSpaceRadius: 0, // No center space
+
+                                    ),
+                                  ),
+
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+
+
+                                    Text('Principal Loan Amount:${emiController.interestPercentage.toStringAsFixed(1)}', style: TextStyle(fontSize: 14,color: Colors.orange)),
+
+
+
+
+                                    Text('Total Interest:${emiController.paymentPercentage.toStringAsFixed(1)}', style: TextStyle(fontSize: 14,color: Colors.green)),
+
+
+
+                                  ],
+                                ),
+                              ],
+                            )
+
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: 900,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal, // Enable horizontal scrolling
+                          child: DataTable(
+                            border: TableBorder.all(),
+                            columns: [
+                              DataColumn(
+                                label: SizedBox(
+                                  width: 30, // Set the width for the column header
+                                  child: Text('Year'),
+                                ),
+                              ),
+                              DataColumn(
+                                label: SizedBox(
+                                  width: 40, // Set the width for the column header
+                                  child: Text('Month'),
+                                ),
+                              ),
+                              DataColumn(
+                                label: SizedBox(
+                                  width: 60, // Set the width for the column header
+                                  child: Text('Principal'),
+                                ),
+                              ),
+                              DataColumn(
+                                label: SizedBox(
+                                  width: 60, // Set the width for the column header
+                                  child: Text('Interest'),
+                                ),
+                              ),
+                              DataColumn(
+                                label: SizedBox(
+                                  width: 100, // Set the width for the column header
+                                  child: Text('Total Payment'),
+                                ),
+                              ),
+                              DataColumn(
+                                label: SizedBox(
+                                  width: 100, // Set the width for the column header
+                                  child: Text('Balance'),
+                                ),
+                              ),
+                              DataColumn(
+                                label: SizedBox(
+                                  width: 150, // Set the width for the column header
+                                  child: Text('Loan Paid to Date'),
+                                ),
+                              ),
+                            ],
+                            rows: emiController.emiSchedule
+                                .map(
+                                  (item) => DataRow(
+                                cells: [
+                                  DataCell(
+                                    SizedBox(
+                                      width: 50, // Set the width for the data cell
+                                      child: Text(item.year.toString()),
+                                    ),
+                                  ),
+                                  DataCell(
+                                    SizedBox(
+                                      width: 40, // Set the width for the data cell
+                                      child: Text(item.month.toString()),
+                                    ),
+                                  ),
+                                  DataCell(
+                                    SizedBox(
+                                      width: 60, // Set the width for the data cell
+                                      child: Text(item.principal.toStringAsFixed(0)),
+                                    ),
+                                  ),
+                                  DataCell(
+                                    SizedBox(
+                                      width: 60, // Set the width for the data cell
+                                      child: Text(item.interest.toStringAsFixed(0)),
+                                    ),
+                                  ),
+                                  DataCell(
+                                    SizedBox(
+                                      width: 100, // Set the width for the data cell
+                                      child: Text(item.totalPayment.toStringAsFixed(0)),
+                                    ),
+                                  ),
+                                  DataCell(
+                                    SizedBox(
+                                      width: 100, // Set the width for the data cell
+                                      child: Text(item.balance.toStringAsFixed(0)),
+                                    ),
+                                  ),
+                                  DataCell(
+                                    SizedBox(
+                                      width: 150, // Set the width for the data cell
+                                      child: Text('${item.loanPaidToDate.toStringAsFixed(2)}%'),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                                .toList(),
+                          ),
+                        ),
+                      ),
+
+
                     ],
-                  )
-
-                ],
-              ),
-            ),
-            Container(
-              width: 900,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal, // Enable horizontal scrolling
-                child: DataTable(
-                  border:TableBorder.all(),
-                  columns: [
-                    DataColumn(
-                      label: SizedBox(
-                        width: 30, // Set the width for the column header
-                        child: Text('Year'),
-                      ),
-                    ),
-                    DataColumn(
-                      label: SizedBox(
-                        width: 40, // Set the width for the column header
-                        child: Text('Month'),
-                      ),
-                    ),
-                    DataColumn(
-                      label: SizedBox(
-                        width: 60, // Set the width for the column header
-                        child: Text('Principal'),
-                      ),
-                    ),
-                    DataColumn(
-                      label: SizedBox(
-                        width: 30, // Set the width for the column header
-                        child: Text('EMI'),
-                      ),
-                    ),
-                    DataColumn(
-                      label: SizedBox(
-                        width: 100, // Set the width for the column header
-                        child: Text('Total Payment'),
-                      ),
-                    ),
-                    DataColumn(
-                      label: SizedBox(
-                        width: 50, // Set the width for the column header
-                        child: Text('Balance'),
-                      ),
-                    ),
-                  ],
-                  rows: emiController.emiSchedule
-                      .map(
-                        (item) => DataRow(
-                      cells: [
-                        DataCell(
-                          SizedBox(
-                            width: 50, // Set the width for the data cell
-                            child: Text(item.year.toString()),
-                          ),
-                        ),
-                        DataCell(
-                          SizedBox(
-                            width: 40, // Set the width for the data cell
-                            child: Text(item.month.toString()),
-                          ),
-                        ),
-                        DataCell(
-                          SizedBox(
-                            width: 60, // Set the width for the data cell
-                            child: Text(item.principal.toStringAsFixed(1)),
-                          ),
-                        ),
-                        DataCell(
-                          SizedBox(
-                            width: 60, // Set the width for the data cell
-                            child: Text(item.loan.toStringAsFixed(1)),
-                          ),
-                        ),
-                        DataCell(
-                          SizedBox(
-                            width: 100, // Set the width for the data cell
-                            child: Text(item.totalPayment.toStringAsFixed(1)),
-                          ),
-                        ),
-                        DataCell(
-                          SizedBox(
-                            width: 70, // Set the width for the data cell
-                            child: Text(item.balance.toStringAsFixed(1)),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                      .toList(),
-                ),
-              ),
-            ),
-
-
-          ],
-        ),
-      );
-      },
-    )
-    )
+                  ),
+                );
+              },
+            )
+        )
     );
   }
 }

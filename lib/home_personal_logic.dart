@@ -48,7 +48,10 @@ class EmiController extends GetxController {
       double interest = balance * rate;
       double principalPaid = emi - interest;
       loanPaidToDate += principalPaid;
+
       balance -= principalPaid;
+
+      double loanPercentagePaid = (loanPaidToDate / principal) * 100; // Calculate percentage paid
 
       int year = currentYear + ((currentDate.month + month - 1) ~/ 12);
       int monthInYear = (currentDate.month + month - 1) % 12;
@@ -59,8 +62,9 @@ class EmiController extends GetxController {
         principal: principalPaid,
         loan: emi,
         totalPayment: emi,
+        interest: interest,
         balance: balance,
-        loanPaidToDate: loanPaidToDate,
+        loanPaidToDate: loanPercentagePaid,
       ));
     }
 
@@ -73,6 +77,7 @@ class EmiScheduleItem {
   final int month;
   final double principal;
   final double loan;
+  final double interest;
   final double totalPayment;
   final double balance;
   final double loanPaidToDate;
@@ -83,6 +88,7 @@ class EmiScheduleItem {
     required this.principal,
     required this.loan,
     required this.totalPayment,
+    required this.interest,
     required this.balance,
     required this.loanPaidToDate,
   });

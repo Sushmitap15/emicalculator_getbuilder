@@ -436,7 +436,7 @@ class PersonalloanContent extends StatelessWidget {
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal, // Enable horizontal scrolling
                           child: DataTable(
-                            border:TableBorder.all(),
+                            border: TableBorder.all(),
                             columns: [
                               DataColumn(
                                 label: SizedBox(
@@ -458,8 +458,8 @@ class PersonalloanContent extends StatelessWidget {
                               ),
                               DataColumn(
                                 label: SizedBox(
-                                  width: 30, // Set the width for the column header
-                                  child: Text('EMI'),
+                                  width: 60, // Set the width for the column header
+                                  child: Text('Interest'),
                                 ),
                               ),
                               DataColumn(
@@ -470,8 +470,14 @@ class PersonalloanContent extends StatelessWidget {
                               ),
                               DataColumn(
                                 label: SizedBox(
-                                  width: 50, // Set the width for the column header
+                                  width: 100, // Set the width for the column header
                                   child: Text('Balance'),
+                                ),
+                              ),
+                              DataColumn(
+                                label: SizedBox(
+                                  width: 150, // Set the width for the column header
+                                  child: Text('Loan Paid to Date'),
                                 ),
                               ),
                             ],
@@ -494,25 +500,31 @@ class PersonalloanContent extends StatelessWidget {
                                   DataCell(
                                     SizedBox(
                                       width: 60, // Set the width for the data cell
-                                      child: Text(item.principal.toStringAsFixed(1)),
+                                      child: Text(item.principal.toStringAsFixed(0)),
                                     ),
                                   ),
                                   DataCell(
                                     SizedBox(
                                       width: 60, // Set the width for the data cell
-                                      child: Text(item.loan.toStringAsFixed(1)),
+                                      child: Text(item.interest.toStringAsFixed(0)),
                                     ),
                                   ),
                                   DataCell(
                                     SizedBox(
                                       width: 100, // Set the width for the data cell
-                                      child: Text(item.totalPayment.toStringAsFixed(1)),
+                                      child: Text(item.totalPayment.toStringAsFixed(0)),
                                     ),
                                   ),
                                   DataCell(
                                     SizedBox(
-                                      width: 70, // Set the width for the data cell
-                                      child: Text(item.balance.toStringAsFixed(1)),
+                                      width: 100, // Set the width for the data cell
+                                      child: Text(item.balance.toStringAsFixed(0)),
+                                    ),
+                                  ),
+                                  DataCell(
+                                    SizedBox(
+                                      width: 150, // Set the width for the data cell
+                                      child: Text('${item.loanPaidToDate.toStringAsFixed(2)}%'),
                                     ),
                                   ),
                                 ],
