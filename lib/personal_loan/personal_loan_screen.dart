@@ -303,7 +303,7 @@ class PersonalloanContent extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         Text('Loan EMI'),
-                                        Text('${emiController.emi.toStringAsFixed(0)}'),
+                                        Text('₹ ${emiController.emi.toStringAsFixed(0)}'),
                                       ],
                                     ),
                                   ),
@@ -316,7 +316,7 @@ class PersonalloanContent extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         Text('Total Interest Payable'),
-                                        Text('${emiController.totalInterestPayable.toStringAsFixed(0)}'),
+                                        Text('₹ ${emiController.totalInterestPayable.toStringAsFixed(0)}'),
                                       ],
                                     ),
                                   ),
@@ -329,7 +329,7 @@ class PersonalloanContent extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         Text('Total Payment(Principal+Interest)'),
-                                        Text('${emiController.totalPayment.toStringAsFixed(0)}'),
+                                        Text('₹ ${emiController.totalPayment.toStringAsFixed(0)}'),
                                       ],
                                     ),
                                   )
@@ -433,10 +433,12 @@ class PersonalloanContent extends StatelessWidget {
                       ),
                       Container(
                         width: 900,
+                        color: Colors.white,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal, // Enable horizontal scrolling
                           child: DataTable(
                             border: TableBorder.all(),
+                            headingRowColor: MaterialStateColor.resolveWith((states) => Colors.grey),
                             columns: [
                               DataColumn(
                                 label: SizedBox(

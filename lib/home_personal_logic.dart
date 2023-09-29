@@ -1,7 +1,9 @@
 import 'dart:math';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart'; // Import the intl package
 
 class EmiController extends GetxController {
+
   double loanAmount = 0.0;
   double interestRate = 0.0;
   double loanTenure = 0.0;

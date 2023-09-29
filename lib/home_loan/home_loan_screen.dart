@@ -8,6 +8,15 @@ import 'package:intl/intl.dart';
 class HomeloanContent extends StatelessWidget {
   const HomeloanContent({Key? key}) : super(key: key);
 
+  String formatAsRupees(double value) {
+    final formatter = NumberFormat.currency(
+      symbol: '₹',
+      decimalDigits: 0, // Set to 2 decimal places
+      locale: 'en_IN', // Use the Indian locale
+    );
+    return formatter.format(value);
+  }
+
   @override
   Widget build(BuildContext context) {
     final emiController = Get.find<EmiController>();
@@ -250,7 +259,7 @@ class HomeloanContent extends StatelessWidget {
                           min: 0,
                           max: 30,
                           showLabels: true,
-                          interval: 15,
+                          interval: 10,
                           showTicks: true,
                           value: selectedTenure, // In years
                           onChanged: (newValue) {
@@ -271,7 +280,7 @@ class HomeloanContent extends StatelessWidget {
                           min: 0,
                           max: 360,
                           showLabels: true,
-                          interval: 120,
+                          interval: 90,
                           showTicks: true,
                           value: selectedTenure, // In months
                           onChanged: (newValue) {
@@ -303,7 +312,7 @@ class HomeloanContent extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         Text('Loan EMI'),
-                                        Text('${emiController.emi.toStringAsFixed(0)}'),
+                                        Text('${formatAsRupees(emiController.emi)}'),
                                       ],
                                     ),
                                   ),
@@ -316,7 +325,7 @@ class HomeloanContent extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         Text('Total Interest Payable'),
-                                        Text('${emiController.totalInterestPayable.toStringAsFixed(0)}'),
+                                        Text('${formatAsRupees(emiController.totalInterestPayable)}'),
                                       ],
                                     ),
                                   ),
@@ -329,7 +338,7 @@ class HomeloanContent extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         Text('Total Payment(Principal+Interest)'),
-                                        Text('${emiController.totalPayment.toStringAsFixed(0)}'),
+                                        Text('${formatAsRupees(emiController.totalPayment)}'),
                                       ],
                                     ),
                                   )
@@ -432,10 +441,12 @@ class HomeloanContent extends StatelessWidget {
                         ),
                       ),
                       Container(
+                        color: Colors.white,
                         width: 900,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal, // Enable horizontal scrolling
                           child: DataTable(
+                            headingRowColor: MaterialStateColor.resolveWith((states) => Colors.grey),
                             border: TableBorder.all(),
                             columns: [
                               DataColumn(
@@ -451,7 +462,9 @@ class HomeloanContent extends StatelessWidget {
                                 ),
                               ),
                               DataColumn(
+
                                 label: SizedBox(
+
                                   width: 60, // Set the width for the column header
                                   child: Text('Principal'),
                                 ),
@@ -500,25 +513,26 @@ class HomeloanContent extends StatelessWidget {
                                   DataCell(
                                     SizedBox(
                                       width: 60, // Set the width for the data cell
-                                      child: Text(item.principal.toStringAsFixed(0)),
+                                      child: Text(formatAsRupees(item.principal.toDouble())),
+
                                     ),
                                   ),
                                   DataCell(
                                     SizedBox(
                                       width: 60, // Set the width for the data cell
-                                      child: Text(item.interest.toStringAsFixed(0)),
+                                      child: Text(formatAsRupees(item.interest.toDouble())),
                                     ),
                                   ),
                                   DataCell(
                                     SizedBox(
                                       width: 100, // Set the width for the data cell
-                                      child: Text(item.totalPayment.toStringAsFixed(0)),
+                                      child: Text(formatAsRupees(item.totalPayment.toDouble())),
                                     ),
                                   ),
                                   DataCell(
                                     SizedBox(
                                       width: 100, // Set the width for the data cell
-                                      child: Text(item.balance.toStringAsFixed(0)),
+                                      child: Text(formatAsRupees(item.balance.toDouble())),
                                     ),
                                   ),
                                   DataCell(
