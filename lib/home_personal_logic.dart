@@ -14,6 +14,7 @@ class EmiController extends GetxController {
   double paymentPercentage = 0.0;
   List<EmiScheduleItem> emiSchedule = [];
 
+
   void calculateEmi() {
     double principal = loanAmount;
     double rate = interestRate / 1200; // Monthly interest rate
