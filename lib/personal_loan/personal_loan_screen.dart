@@ -7,6 +7,14 @@ import 'package:intl/intl.dart';
 
 class PersonalloanContent extends StatelessWidget {
   const PersonalloanContent({Key? key}) : super(key: key);
+  String formatAsRupees(double value) {
+    final formatter = NumberFormat.currency(
+      symbol: '₹',
+      decimalDigits: 0, // Set to 2 decimal places
+      locale: 'en_IN', // Use the Indian locale
+    );
+    return formatter.format(value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -303,7 +311,7 @@ class PersonalloanContent extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         Text('Loan EMI'),
-                                        Text('₹ ${emiController.emi.toStringAsFixed(0)}'),
+                                        Text('${formatAsRupees(emiController.emi)}'),
                                       ],
                                     ),
                                   ),
@@ -316,7 +324,7 @@ class PersonalloanContent extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         Text('Total Interest Payable'),
-                                        Text('₹ ${emiController.totalInterestPayable.toStringAsFixed(0)}'),
+                                        Text('${formatAsRupees(emiController.totalInterestPayable)}'),
                                       ],
                                     ),
                                   ),
@@ -329,7 +337,7 @@ class PersonalloanContent extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         Text('Total Payment(Principal+Interest)'),
-                                        Text('₹ ${emiController.totalPayment.toStringAsFixed(0)}'),
+                                        Text('${formatAsRupees(emiController.totalPayment)}'),
                                       ],
                                     ),
                                   )
@@ -432,54 +440,90 @@ class PersonalloanContent extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: 900,
                         color: Colors.white,
+                        width: 900,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal, // Enable horizontal scrolling
                           child: DataTable(
-                            border: TableBorder.all(),
                             headingRowColor: MaterialStateColor.resolveWith((states) => Colors.grey),
+                            border: TableBorder.all(),
                             columns: [
                               DataColumn(
-                                label: SizedBox(
-                                  width: 30, // Set the width for the column header
-                                  child: Text('Year'),
+                                label: Container(
+
+                                  color: Colors.blue, // Set the background color for the 'Year' column header
+                                  child: Center(
+                                    child: Text(
+                                      'Year',
+                                      style: TextStyle(color: Colors.white), // Set text color
+                                    ),
+                                  ),
                                 ),
                               ),
                               DataColumn(
-                                label: SizedBox(
-                                  width: 40, // Set the width for the column header
-                                  child: Text('Month'),
+                                label: Container(
+                                  color: Colors.green, // Set the background color for the 'Month' column header
+                                  child: Center(
+                                    child: Text(
+                                      'Month',
+                                      style: TextStyle(color: Colors.white), // Set text color
+                                    ),
+                                  ),
                                 ),
                               ),
                               DataColumn(
-                                label: SizedBox(
-                                  width: 60, // Set the width for the column header
-                                  child: Text('Principal'),
+                                label: Container(
+                                  color: Colors.red, // Set the background color for the 'Principal' column header
+                                  child: Center(
+                                    child: Text(
+                                      'Principal',
+                                      style: TextStyle(color: Colors.white), // Set text color
+                                    ),
+                                  ),
                                 ),
                               ),
                               DataColumn(
-                                label: SizedBox(
-                                  width: 60, // Set the width for the column header
-                                  child: Text('Interest'),
+                                label: Container(
+                                  color: Colors.orange, // Set the background color for the 'Interest' column header
+                                  child: Center(
+                                    child: Text(
+                                      'Interest',
+                                      style: TextStyle(color: Colors.white), // Set text color
+                                    ),
+                                  ),
                                 ),
                               ),
                               DataColumn(
-                                label: SizedBox(
-                                  width: 100, // Set the width for the column header
-                                  child: Text('Total Payment'),
+                                label: Container(
+                                  color: Colors.purple, // Set the background color for the 'Total Payment' column header
+                                  child: Center(
+                                    child: Text(
+                                      'Total Payment',
+                                      style: TextStyle(color: Colors.white), // Set text color
+                                    ),
+                                  ),
                                 ),
                               ),
                               DataColumn(
-                                label: SizedBox(
-                                  width: 100, // Set the width for the column header
-                                  child: Text('Balance'),
+                                label: Container(
+                                  color: Colors.teal, // Set the background color for the 'Balance' column header
+                                  child: Center(
+                                    child: Text(
+                                      'Balance',
+                                      style: TextStyle(color: Colors.white), // Set text color
+                                    ),
+                                  ),
                                 ),
                               ),
                               DataColumn(
-                                label: SizedBox(
-                                  width: 150, // Set the width for the column header
-                                  child: Text('Loan Paid to Date'),
+                                label: Container(
+                                  color: Colors.brown, // Set the background color for the 'Loan Paid to Date' column header
+                                  child: Center(
+                                    child: Text(
+                                      'Loan Paid to Date',
+                                      style: TextStyle(color: Colors.white), // Set text color
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -502,25 +546,25 @@ class PersonalloanContent extends StatelessWidget {
                                   DataCell(
                                     SizedBox(
                                       width: 60, // Set the width for the data cell
-                                      child: Text(item.principal.toStringAsFixed(0)),
+                                      child: Text(formatAsRupees(item.principal.toDouble())),
                                     ),
                                   ),
                                   DataCell(
                                     SizedBox(
                                       width: 60, // Set the width for the data cell
-                                      child: Text(item.interest.toStringAsFixed(0)),
+                                      child: Text(formatAsRupees(item.interest.toDouble())),
                                     ),
                                   ),
                                   DataCell(
                                     SizedBox(
                                       width: 100, // Set the width for the data cell
-                                      child: Text(item.totalPayment.toStringAsFixed(0)),
+                                      child: Text(formatAsRupees(item.totalPayment.toDouble())),
                                     ),
                                   ),
                                   DataCell(
                                     SizedBox(
                                       width: 100, // Set the width for the data cell
-                                      child: Text(item.balance.toStringAsFixed(0)),
+                                      child: Text(formatAsRupees(item.balance.toDouble())),
                                     ),
                                   ),
                                   DataCell(
@@ -536,6 +580,7 @@ class PersonalloanContent extends StatelessWidget {
                           ),
                         ),
                       ),
+
 
 
                     ],

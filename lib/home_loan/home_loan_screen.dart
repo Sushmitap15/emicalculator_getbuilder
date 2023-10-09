@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:intl/intl.dart';
 
+
+
 class HomeloanContent extends StatelessWidget {
   const HomeloanContent({Key? key}) : super(key: key);
 
@@ -450,47 +452,81 @@ class HomeloanContent extends StatelessWidget {
                             border: TableBorder.all(),
                             columns: [
                               DataColumn(
-                                label: SizedBox(
-                                  width: 30, // Set the width for the column header
-                                  child: Text('Year'),
-                                ),
-                              ),
-                              DataColumn(
-                                label: SizedBox(
-                                  width: 40, // Set the width for the column header
-                                  child: Text('Month'),
-                                ),
-                              ),
-                              DataColumn(
+                                label: Container(
 
-                                label: SizedBox(
-
-                                  width: 60, // Set the width for the column header
-                                  child: Text('Principal'),
+                                  color: Colors.blue, // Set the background color for the 'Year' column header
+                                  child: Center(
+                                    child: Text(
+                                      'Year',
+                                      style: TextStyle(color: Colors.white), // Set text color
+                                    ),
+                                  ),
                                 ),
                               ),
                               DataColumn(
-                                label: SizedBox(
-                                  width: 60, // Set the width for the column header
-                                  child: Text('Interest'),
+                                label: Container(
+                                  color: Colors.green, // Set the background color for the 'Month' column header
+                                  child: Center(
+                                    child: Text(
+                                      'Month',
+                                      style: TextStyle(color: Colors.white), // Set text color
+                                    ),
+                                  ),
                                 ),
                               ),
                               DataColumn(
-                                label: SizedBox(
-                                  width: 100, // Set the width for the column header
-                                  child: Text('Total Payment'),
+                                label: Container(
+                                  color: Colors.red, // Set the background color for the 'Principal' column header
+                                  child: Center(
+                                    child: Text(
+                                      'Principal',
+                                      style: TextStyle(color: Colors.white), // Set text color
+                                    ),
+                                  ),
                                 ),
                               ),
                               DataColumn(
-                                label: SizedBox(
-                                  width: 100, // Set the width for the column header
-                                  child: Text('Balance'),
+                                label: Container(
+                                  color: Colors.orange, // Set the background color for the 'Interest' column header
+                                  child: Center(
+                                    child: Text(
+                                      'Interest',
+                                      style: TextStyle(color: Colors.white), // Set text color
+                                    ),
+                                  ),
                                 ),
                               ),
                               DataColumn(
-                                label: SizedBox(
-                                  width: 150, // Set the width for the column header
-                                  child: Text('Loan Paid to Date'),
+                                label: Container(
+                                  color: Colors.purple, // Set the background color for the 'Total Payment' column header
+                                  child: Center(
+                                    child: Text(
+                                      'Total Payment',
+                                      style: TextStyle(color: Colors.white), // Set text color
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Container(
+                                  color: Colors.teal, // Set the background color for the 'Balance' column header
+                                  child: Center(
+                                    child: Text(
+                                      'Balance',
+                                      style: TextStyle(color: Colors.white), // Set text color
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Container(
+                                  color: Colors.brown, // Set the background color for the 'Loan Paid to Date' column header
+                                  child: Center(
+                                    child: Text(
+                                      'Loan Paid to Date',
+                                      style: TextStyle(color: Colors.white), // Set text color
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -514,7 +550,6 @@ class HomeloanContent extends StatelessWidget {
                                     SizedBox(
                                       width: 60, // Set the width for the data cell
                                       child: Text(formatAsRupees(item.principal.toDouble())),
-
                                     ),
                                   ),
                                   DataCell(
@@ -548,6 +583,7 @@ class HomeloanContent extends StatelessWidget {
                           ),
                         ),
                       ),
+
 
 
                     ],
